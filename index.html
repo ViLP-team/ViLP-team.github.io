@@ -1,0 +1,243 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cap3D</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="static/img/favicon.ico">
+
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+body{font-family:"Open Sans",Segoe,"Segoe UI","Lucida Sans Unicode","Lucida Grande","Avenir","Seravek","Ubuntu","DejaVu Sans","Trebuchet MS",Verdana,Arial,sans-serif}
+#header{background:#00274C;opacity:0.95;margin:0 auto;padding:50px 0 0;text-align:center;cursor:default;text-align:center}
+#header-container{margin:0 auto;padding: 0 2em;max-width:1000px}
+
+#header-container .col-logo{text-align:left}
+#header-container .logo{position:relative;z-index:100;height:50px;margin-top:20px;margin-right:10px}
+
+#header-container .col-info{text-align:left;margin-bottom:20px}
+#header-container #title{margin:.525em 0 1.525em;font-size:1.6em;font-weight:800;text-align:center}
+
+.paper-info{color:#8a8989;display:inline-block;margin:0 auto;text-align:left}
+.paper-info-margin{margin-bottom:20px}
+.paper-info p, .paper-info h3{line-height:1.6em; margin-bottom: 0em}
+.paper-info .title{font-size:16px;color:#FFCB05;font-weight:600}
+.paper-info .authors, .paper-info .authors a{color:#989C97}
+.paper-info .authors_bottom, .paper-info .authors_bottom a{color:#567EAE}
+.paper-info .email{color:#666; font-size:14px}
+.paper-info .tag{margin:auto auto;padding:0;list-style:none;text-align:left}
+.paper-info .tag li{display:inline-block;margin:auto;padding:0 3px 0 0;line-height:10px;color:#567EAE} a{color:#567EAE}
+.paper-info .conference, .paper-info .conference a{color:#FFCB05;font-weight:600}
+.paper-info .top a{color:#989C97}
+
+#wave-canvas{color:#8a8989;display:block;margin:-80px 0 0;width:100%;height:150px}
+
+#content{padding-top:0px;text-align:left;}
+#content-container{margin:0 auto;padding: 0 2em;max-width:1000px;}
+
+#content-container .header{color:#00274C;background:#FFCB05;padding:15px 30px 5px;border-bottom:3px solid #dddddd}
+#content-container .header .indicator{color:#00274C;margin-right:12px}
+
+#content-container .content{background:#ffffff;padding:15px 5px 15px 30px}
+#content-container .content .caption{color:#989C97}
+#content-container .content .bib{color:#989C97;font-size:14px;}
+#content-container .content .bib pre{margin:0;padding:0;}
+#content-container .content .href{style="color:#567EAE"}
+
+
+
+#footer{padding:2em 0 0.5em;margin:30px 0 0;background:#ffffff;opacity:0.95;font-size:14px;line-height:12px;text-align:center;color:#989C97}
+.highlight, .highlight a{color:#BB2222;font-weight:600}
+    </style>
+</head>
+<body>
+<div id="main">
+    <div id="header">
+        <div id="header-container" class="container">
+          <div class="row">
+            <div class="col-md-12 col-xl-12 col-info">
+                <h1 id="title"><p style="color:#FFCB05"> Cap3D </p></h1>
+                <div class="paper-info", style="margin-bottom: 15px;">
+                    <h3 class="title">Probing Visual Language Priors in VLMs</h3>
+                    <p class="authors">
+                    <a href="https://tiangeluo.github.io/">Tiange Luo*</a>, <a href="https://caoang327.github.io/">Ang Cao*</a>, <a href="https://tiangeluo.github.io/">Gunhee Lee</a>,  <a href="https://web.eecs.umich.edu/~justincj/">Justin Johnson<sup>&#8224;</sup></a>, <a href="https://web.eecs.umich.edu/~honglak/">Honglak Lee<sup>&#8224;</sup></a> (*: equal contribution, &#8224;: equal advising)
+                    </p>
+                    <ul class="tag">
+                        <li class="conference"><a href="">arXiv 2024</a> </li>
+                        <li class="top"><a href="https://arxiv.org/abs/2501.00569">Paper</a> |</li>
+                        <li class="top"><a href="https://github.com/ViLP-team">Code</a> |</li>
+                        <li class="top"><a href="https://huggingface.co/datasets/ViLP/ViLP">Dataset</a> |</li>
+                        <li class="top"><a href="https://huggingface.co/ViLP">Pre-trained Models</a> |</li>
+                        <li class="top"><a href="https://tiangeluo.github.io/projectpages/bibs/cap3d.txt">BibTeX</a> </li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+
+        </div>
+        <canvas id="wave-canvas"></canvas>
+    </div>
+    <div id="content">
+        <div id="content-container" class="container">
+            <div class="header"><h4><span class="indicator">=</span>Resources</h4></div>
+            <div class="content">
+                <ul>
+                    <li>Our ViLP dataset is hosted at <a href="https://huggingface.co/datasets/ViLP/ViLP">[Huggingface]</a>.</li>
+                    <li>Our ViLP evaluation code are released in <a href="https://github.com/ViLP-team/ViLP">[Github]</a></li>
+                    <li>Our ImageDPO finetuned models are released in <a href="https://huggingface.co/ViLP/LLaVA-v1.5-13b-ImageDPO">[LLaVA-v1.5-13b-ImageDPO]</a> and <a href="https://huggingface.co/ViLP/LLaVA-v1.5-7b-ImageDPO">[LLaVA-v1.5-7b-ImageDPO]</a></li>
+                    <li>Our ImageDPO finetune pipeline code (data synthetic & finetuning) are released in <a href="https://github.com/ViLP-team/ImageDPO">[Github]</a></li>
+                    <li>Our ImageDPO training data are released in <a href="https://huggingface.co/datasets/ViLP/ImageDPO">[Huggingface]</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="content-container" class="container">
+            <div class="header"><h4><span class="indicator">=</span>Overview</h4></div>
+            <div class="content">
+            <style>
+                .add-space {
+                    margin-bottom: 20px;
+                }
+            </style>
+            <p>
+                ViLP is the dataset we used to probe the visual language priors of VLMs by constructing Question-Image-Answer (QIA) triplets that deliberately deviate from the training data distribution. It contains 300 carefully designed questions, each paired with three distinct answers: a Prior Answer and two Test Answers, resulting in a total of 900 QIA triplets. Our question context directly leads to the Prior Answer. In contrast, the two Test Answers are crafted to challenge the priors by requiring both textual and visual cues for accurate reasoning.
+            </p>
+
+            <p>
+                <center>
+                <img width="100%" src="https://github.com/ViLP-team/ViLP/blob/main/sample.png">
+                </center>
+                </p>
+                <!-- <p class="caption">
+                <center>
+                Figure 1:  Example captioning results by Cap3D.
+                </center> -->
+            </p>
+
+            To alleviate the replying of visual language priors obtained in the training process, we propose a new pipeline & objective called ImageDPO, which is a self-improving approach to enhance VLM visual reasoning performance by increasing reliance on visual inputs.
+
+            <p class="add-space">
+                <center>
+                <img width="100%" src="https://huggingface.co/ViLP/LLaVA-v1.5-13b-ImageDPO/resolve/main/ImageDPO.png">
+                </center>
+                </p>
+            <p>
+
+            </div>
+        </div>
+
+            </div>
+        </div>
+
+<!--
+        <div id="content-container" class="container">
+            <div class="header"><h4><span class="indicator">=</span>Related Publication</h4></div>
+            <div class="content">
+                <div class="paper-info", style="margin-bottom: 15px;">
+                    <h3 class="title">Objaverse: A Universe of Annotated 3D Objects</h3>
+                    <p class="authors_bottom">
+                        Matt Deitke, Dustin Schwenk, Jordi Salvador, Luca Weihs, Oscar Michel, Eli VanderBilt, Ludwig Schmidt, Kiana Ehsani, Aniruddha Kembhavi, Ali Farhadi
+                    </p>
+                    <ul class="tag">
+                        <li class="conference"><a href="https://cvpr2023.thecvf.com/">CVPR 2023</a></a></li>
+                        <li class="body"><a href="https://objaverse.allenai.org/">Project Page</a> </li>
+                    </ul>
+                </div>
+
+                <div class="paper-info", style="margin-bottom: 15px;">
+                    <h3 class="title">ABO: Dataset and Benchmarks for Real-World 3D Object Understanding</h3>
+                    <p class="authors_bottom">
+                        Jasmine Collins, Shubham Goel, Kenan Deng, Achleshwar Luthra, Leon Xu, Erhan Gundogdu, Xi Zhang, Tomas F. Yago Vicente, Thomas Dideriksen, Himanshu Arora, Matthieu Guillaumin, Jitendra Malik
+                    </p>
+                    <ul class="tag">
+                        <li class="conference"><a href="https://cvpr2022.thecvf.com/">CVPR 2022</a></a></li>
+                        <li class="body"><a href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Project Page</a> </li>
+                    </ul>
+                </div>
+                <div class="paper-info", style="margin-bottom: 15px;">
+                    <h3 class="title">GPT-4 Technical Report</h3>
+                    <p class="authors_bottom">
+                        OpenAI
+                    </p>
+                    <ul class="tag">
+                        <li class="conference"><a href="https://arxiv.org/abs/2303.08774">arXiv 2023</a></a></li>
+                        <li class="body"><a href="https://arxiv.org/pdf/2303.08774.pdf">Page</a> </li>
+                    </ul>
+                </div>
+                <div class="paper-info", style="margin-bottom: 15px;">
+                    <h3 class="title">BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models</h3>
+                    <p class="authors_bottom">
+                        Junnan Li, Dongxu Li, Silvio Savarese, Steven Hoi
+                    </p>
+                    <ul class="tag">
+                        <li class="conference"><a href="https://arxiv.org/abs/2301.12597">arXiv 2023</a></a></li>
+                        <li class="body"><a href="https://arxiv.org/pdf/2301.12597.pdf">Page</a> </li>
+                    </ul>
+                </div>
+                <div class="paper-info", style="margin-bottom: 15px;">
+                    <h3 class="title">Objaverse-XL: A Universe of 10M+ 3D Objects</h3>
+                    <p class="authors_bottom">
+                        Matt Deitke, Ruoshi Liu, Matthew Wallingford, Huong Ngo, Oscar Michel, Aditya Kusupati, Alan Fan, Christian Laforte, Vikram Voleti, Samir Yitzhak Gadre, Eli VanderBilt, Aniruddha Kembhavi, Carl Vondrick, Georgia Gkioxari, Kiana Ehsani, Ludwig Schmidt, Ali Farhadi
+                    </p>
+                    <ul class="tag">
+                        <li class="conference"><a href="https://neurips.cc/Conferences/2023">NeurIPS 2023</a></a></li>
+                        <li class="body"><a href="https://objaverse.allenai.org/">Project Page</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+    <div id="footer">
+        <p>Thank this <a href="http://nscl.csail.mit.edu/">template</a>. <a href="https://accessibility.umich.edu/">Accessibility</a>. </p>
+    </div>
+    <!----------
+    <div id="footer">
+        <p>Thank this <a href="http://nscl.csail.mit.edu/">template</a> </p>
+    </div>
+    ---------->
+</div>
+
+<!-- jQuery first, then Tether, then Bootstrap JS. -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script type="text/javascript" src="static/js/jquery.color.min.js"></script>
+<script type="text/javascript" src="static/js/wave.js"></script>
+<script type="text/javascript">
+$(function() {
+    targetColor = $("#title").css("color")
+    animatedLink = function(speed) {
+        $(".link-li").hover(function() {
+            $(this).find('.icon').animate({
+                color: targetColor,
+                borderColor: targetColor
+            }, speed);
+            $(this).find('.caption').animate({
+                color: '#798350'
+            })
+        }, function() {
+            $(this).find('.icon').animate({
+                borderColor: '#cccccc',
+                color: '#cccccc'
+            }, speed);
+            $(this).find('.caption').animate({
+                color: '#cccccc'
+            })
+        })
+    };
+    // fullBg();
+    animatedLink(400)
+});
+</script>
+</body>
+</html>
