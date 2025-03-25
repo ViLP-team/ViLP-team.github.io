@@ -100,53 +100,49 @@ body{font-family:"Open Sans",Segoe,"Segoe UI","Lucida Sans Unicode","Lucida Gran
         </div>
         <div id="content-container" class="container">
             <div class="header"><h4><span class="indicator">=</span>Gallery</h4></div>
-            <button onclick="loadRandomSamples()">Refresh</button>
+            <button onclick="loadRandomSample()">Refresh</button>
             <div id="gallery"></div>
 
             <script>
-                async function loadRandomSamples() {
-                  // 1) Use the RAW link from GitHub:
+                async function loadRandomSample() {
+                  // Fetch JSON data from GitHub (or adjust the path if needed)
                   const response = await fetch("https://raw.githubusercontent.com/ViLP-team/ViLP-team.github.io/main/vilp.json");
-                  // or if vilp.json is in the same folder:
-                  // const response = await fetch("./vilp.json");
-                
-                  const data = await response.json(); // an array of { question, image1, answer1, ... }
-                
-                  // Randomly sample 3
-                  const samples = [];
-                  for (let i = 0; i < 3; i++) {
-                    const randIndex = Math.floor(Math.random() * data.length);
-                    samples.push(data[randIndex]);
-                  }
-                
+                  const data = await response.json();
+              
+                  // Randomly select one row from the data array
+                  const randomRow = data[Math.floor(Math.random() * data.length)];
+              
+                  // Randomly choose between answer2 and answer3 (and corresponding image2 or image3)
+                  const useSecond = Math.random() < 0.5;
+                  const selectedImage = useSecond ? randomRow.image2 : randomRow.image3;
+                  const selectedAnswer = useSecond ? randomRow.answer2 : randomRow.answer3;
+              
+                  // Clear the gallery div
                   const galleryDiv = document.getElementById("gallery");
-                  galleryDiv.innerHTML = ""; // clear
-                
-                  samples.forEach((row) => {
-                    const itemDiv = document.createElement("div");
-                    itemDiv.innerHTML = `
-                      <h4>Q: ${row.question}</h4>
-                      <div style="display:flex; gap:20px;">
-                        <div>
-                          <img src="${row.image1}" style="max-width:200px;border:1px solid #ccc;" />
-                          <p><b>Answer:</b> ${row.answer1}</p>
-                        </div>
-                        <div>
-                          <img src="${row.image2}" style="max-width:200px;border:1px solid #ccc;" />
-                          <p><b>Answer:</b> ${row.answer2}</p>
-                        </div>
-                        <div>
-                          <img src="${row.image3}" style="max-width:200px;border:1px solid #ccc;" />
-                          <p><b>Answer:</b> ${row.answer3}</p>
-                        </div>
-                      </div>
-                    `;
-                    galleryDiv.appendChild(itemDiv);
-                  });
+                  galleryDiv.innerHTML = "";
+              
+                  // Create a new container for the question, image, and answer.
+                  // The inner container (with id "fadeContainer") is initially hidden (opacity: 0)
+                  // and will fade in over 3 seconds.
+                  const itemDiv = document.createElement("div");
+                  itemDiv.innerHTML = `
+                    <h5>Q: ${randomRow.question}</h5>
+                    <div id="fadeContainer" style="opacity:0; transition: opacity 4s; text-align: center;">
+                      <img src="${selectedImage}" style="max-width:300px; border:1px solid #ccc; display: block; margin: auto;" />
+                      <p><b>Answer:</b> ${selectedAnswer}</p>
+                    </div>
+                  `;
+                  galleryDiv.appendChild(itemDiv);
+              
+                  // Trigger the fade-in effect after a short delay to ensure the element is rendered
+                  setTimeout(() => {
+                    document.getElementById("fadeContainer").style.opacity = 1;
+                  }, 100);
                 }
-
-                document.addEventListener("DOMContentLoaded", loadRandomSamples);
-                </script>
+              
+                // Automatically load a sample when the DOM is fully loaded.
+                document.addEventListener("DOMContentLoaded", loadRandomSample);
+              </script>
         </div>
 
         <div id="content-container" class="container">
