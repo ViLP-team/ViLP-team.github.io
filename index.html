@@ -17,7 +17,7 @@
     <![endif]-->
     <style type="text/css">
 body{font-family:"Open Sans",Segoe,"Segoe UI","Lucida Sans Unicode","Lucida Grande","Avenir","Seravek","Ubuntu","DejaVu Sans","Trebuchet MS",Verdana,Arial,sans-serif}
-#header{background:#00274C;opacity:0.95;margin:0 auto;padding:50px 0 0;text-align:center;cursor:default;text-align:center}
+#header{background:#00274C;opacity:0.95;margin:0 auto;padding:20px 0 0;text-align:center;cursor:default;text-align:center}
 #header-container{margin:0 auto;padding: 0 2em;max-width:1000px}
 
 #header-container .col-logo{text-align:left}
@@ -64,8 +64,8 @@ body{font-family:"Open Sans",Segoe,"Segoe UI","Lucida Sans Unicode","Lucida Gran
         <div id="header-container" class="container">
           <div class="row">
             <div class="col-md-12 col-xl-12 col-info">
-                <h1 id="title"><p style="color:#FFCB05"> Cap3D </p></h1>
-                <div class="paper-info", style="margin-bottom: 15px;">
+                <h1 id="title"><p style="color:#FFCB05"> ViLP </p></h1>
+                <div class="paper-info", style="margin-bottom: 5px;">
                     <h3 class="title">Probing Visual Language Priors in VLMs</h3>
                     <p class="authors">
                     <a href="https://tiangeluo.github.io/">Tiange Luo*</a>, <a href="https://caoang327.github.io/">Ang Cao*</a>, <a href="https://tiangeluo.github.io/">Gunhee Lee</a>,  <a href="https://web.eecs.umich.edu/~justincj/">Justin Johnson<sup>&#8224;</sup></a>, <a href="https://web.eecs.umich.edu/~honglak/">Honglak Lee<sup>&#8224;</sup></a> (*: equal contribution, &#8224;: equal advising)
@@ -98,6 +98,57 @@ body{font-family:"Open Sans",Segoe,"Segoe UI","Lucida Sans Unicode","Lucida Gran
                 </ul>
             </div>
         </div>
+        <div id="content-container" class="container">
+            <div class="header"><h4><span class="indicator">=</span>Gallery</h4></div>
+            <button onclick="loadRandomSamples()">Refresh</button>
+            <div id="gallery"></div>
+
+            <script>
+                async function loadRandomSamples() {
+                  // 1) Use the RAW link from GitHub:
+                  const response = await fetch("https://raw.githubusercontent.com/ViLP-team/ViLP-team.github.io/main/vilp.json");
+                  // or if vilp.json is in the same folder:
+                  // const response = await fetch("./vilp.json");
+                
+                  const data = await response.json(); // an array of { question, image1, answer1, ... }
+                
+                  // Randomly sample 3
+                  const samples = [];
+                  for (let i = 0; i < 3; i++) {
+                    const randIndex = Math.floor(Math.random() * data.length);
+                    samples.push(data[randIndex]);
+                  }
+                
+                  const galleryDiv = document.getElementById("gallery");
+                  galleryDiv.innerHTML = ""; // clear
+                
+                  samples.forEach((row) => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.innerHTML = `
+                      <h4>Q: ${row.question}</h4>
+                      <div style="display:flex; gap:20px;">
+                        <div>
+                          <img src="${row.image1}" style="max-width:200px;border:1px solid #ccc;" />
+                          <p><b>Answer:</b> ${row.answer1}</p>
+                        </div>
+                        <div>
+                          <img src="${row.image2}" style="max-width:200px;border:1px solid #ccc;" />
+                          <p><b>Answer:</b> ${row.answer2}</p>
+                        </div>
+                        <div>
+                          <img src="${row.image3}" style="max-width:200px;border:1px solid #ccc;" />
+                          <p><b>Answer:</b> ${row.answer3}</p>
+                        </div>
+                      </div>
+                    `;
+                    galleryDiv.appendChild(itemDiv);
+                  });
+                }
+
+                document.addEventListener("DOMContentLoaded", loadRandomSamples);
+                </script>
+        </div>
+
         <div id="content-container" class="container">
             <div class="header"><h4><span class="indicator">=</span>Overview</h4></div>
             <div class="content">
